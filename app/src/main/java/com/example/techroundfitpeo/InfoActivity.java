@@ -55,6 +55,7 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+
         if (ContextCompat.checkSelfPermission(InfoActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(InfoActivity.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
@@ -84,7 +85,7 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
         map1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(InfoActivity.this, MapsActivity.class);
+                Intent intent = new Intent(InfoActivity.this, MapActivity.class);
                 startActivity(intent);
             }
         });
