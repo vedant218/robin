@@ -1,1 +1,1 @@
-UI Design project for an Internship on Android Studio. 
+UI Design project for an Internship in Android Development. 
