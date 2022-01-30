@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.icu.text.IDNA;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -42,10 +43,11 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
     TextView location1;
     TextView map1;
 
+    Location myLocation;
+
     LocationManager locationManager;
 
     String longitude, latitude, fullAddress;
-
 
 
 
@@ -53,9 +55,7 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-
-
-        if (ContextCompat.checkSelfPermission(InfoActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(InfoActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) !=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(InfoActivity.this, new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION
             },100);
@@ -118,6 +118,7 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
 
     }
 
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -133,8 +134,7 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
         }
         Location myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
 
-        latitude = String.valueOf(myLocation.getLatitude());
-        longitude = String.valueOf(myLocation.getLongitude());
+
 
         Geocoder geocoder = new Geocoder(InfoActivity.this, Locale.getDefault());
         List<Address> addresses = null;
@@ -147,6 +147,9 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
 
         fullAddress = address;
 
+        latitude = String.valueOf(myLocation.getLatitude());
+        longitude = String.valueOf(myLocation.getLongitude());
+
         location1.setText(address);
         location1.setVisibility(View.VISIBLE);
 
@@ -156,6 +159,9 @@ public class InfoActivity extends AppCompatActivity implements LocationListener,
     @Override
     public void onLocationChanged(@NonNull Location location) {
         Toast.makeText(this, ""+location.getLatitude() + location.getLongitude(), Toast.LENGTH_SHORT).show();
+
+//        Double longi = location.getLongitude();
+//        Double lati = location.getLatitude();
 
         longitude = String.valueOf(location.getLongitude());
         latitude = String.valueOf(location.getLatitude());
